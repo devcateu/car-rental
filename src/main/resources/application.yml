@@ -1,0 +1,25 @@
+car-rental:
+  fleet:
+    counts:
+      SEDAN: 5
+      SUV: 3
+      VAN: 2
+  booking:
+    # Optimistic writes lose races under load. Resilience4j owns the loop; when the budget runs
+    # out the request is answered 503 rather than being told the fleet is full.
+    retry:
+      attempts: 4
+      base-delay: 5ms
+      max-delay: 50ms
+      multiplier: 2.0
+      randomization-factor: 0.5
+
+spring:
+  application:
+    name: car-rental
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080

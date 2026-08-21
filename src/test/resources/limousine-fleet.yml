@@ -1,0 +1,18 @@
+# A complete, standalone configuration for ConfiguredCarTypesApiSpec.
+#
+# It deliberately replaces application.yml rather than layering on top of it: Spring merges
+# map properties across sources, so overriding car-rental.fleet.counts.* in @SpringBootTest
+# would ADD these types to SEDAN/SUV/VAN instead of replacing them, and the spec could not
+# show that the usual types are absent.
+car-rental:
+  fleet:
+    counts:
+      LIMOUSINE: 1
+      CARGO_BIKE: 2
+
+spring:
+  application:
+    name: car-rental
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
